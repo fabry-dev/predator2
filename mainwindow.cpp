@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     gm = new game(this);
 
 
- //test
 
 }
 
