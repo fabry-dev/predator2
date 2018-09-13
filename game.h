@@ -10,7 +10,10 @@
 #include <QMouseEvent>
 #include "qstringlist.h"
 #include "button.h"
+#include "mainwindow.h"
 
+
+class MainWindow;
 
 
 class game:public QLabel
@@ -24,6 +27,7 @@ public:
 
 private:
     QPixmap *bgImg;
+    MainWindow *mw;
 
 
 

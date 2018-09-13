@@ -12,11 +12,12 @@
 
 game::game(QWidget *parent):QLabel(parent)
 {
+    mw = (MainWindow*)(this->parent());
 
     this->hide();
     this->resize(1920,1080);
 
-    bgImg = new QPixmap(PATH+"gameBG.png");
+    bgImg = new QPixmap(mw->PATH+"gameBG.png");
 
 }
 

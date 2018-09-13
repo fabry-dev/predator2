@@ -19,23 +19,26 @@
 #define NAME1_MIN_LENGTH 3
 
 
-#define FONTNAME PATH+"Futura.ttc"
+#define FONTNAME "Futura.ttc"
 
 
 visual::visual(QWidget *parent):QLabel(parent)
 {
+    mw = (MainWindow*)(this->parent());
+
+
     gameState = game_none;
     this->hide();
     this->resize(1920,1080);
 
-    startImg = new QPixmap(PATH+"startBG.png");
-    infoImg = new QPixmap(PATH+"infoBG.png");
-    playersImg = new QPixmap(PATH+"playersBG.png");
+    startImg = new QPixmap(mw->PATH+"startBG.png");
+    infoImg = new QPixmap(mw->PATH+"infoBG.png");
+    playersImg = new QPixmap(mw->PATH+"playersBG.png");
 
-    keyboardImg1 = new QPixmap(PATH+"keyboardBG1.png");
+    keyboardImg1 = new QPixmap(mw->PATH+"keyboardBG1.png");
 
 
-    int id = QFontDatabase::addApplicationFont(FONTNAME);
+    int id = QFontDatabase::addApplicationFont(mw->PATH+FONTNAME);
     QString family = QFontDatabase::applicationFontFamilies(id).at(0);
     font = QFont(family,50);
     name1P = new QLabel(this);
@@ -49,10 +52,10 @@ visual::visual(QWidget *parent):QLabel(parent)
     initKeyboards();
 
 
-    bOne = new button(this,1,buttonWidth,"oneplayer.png","oneplayer2.png",true);
+    bOne = new button(this,1,buttonWidth,mw->PATH+"onePlayer2.png",mw->PATH+"onePlayer.png",true);
     bOne->move((width()-2*bOne->width()-buttonSpacing)/2,500);
     connect(bOne,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
-    bTwo = new button(this,1,buttonWidth,"twoplayers.png","twoplayers2.png",true);
+    bTwo = new button(this,1,buttonWidth,mw->PATH+"twoPlayers2.png",mw->PATH+"twoPlayers.png",true);
     bTwo->move(width()-bOne->width()-bOne->x(),500);
     connect(bTwo,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
     //bTwo->move((width()-2*bOne->width()-buttonSpacing)/2+buttonSpacing+bOne->width(),500);

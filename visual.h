@@ -11,8 +11,11 @@
 #include "qstringlist.h"
 #include "button.h"
 #include "qfontdatabase.h"
+#include "mainwindow.h"
 
 enum states { game_none,game_start,game_info,game_choice,game_keyboard1,game_keyboard2 };
+
+class  MainWindow;
 
 
 struct key {
@@ -31,6 +34,8 @@ public:
     void start();
 
 private:
+    MainWindow *mw;
+
     QPixmap *startImg,*infoImg,*playersImg,*keyboardImg1,*keyboardImg2;
     button *bOne,*bTwo;
     states gameState;

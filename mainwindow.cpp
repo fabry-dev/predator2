@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    getParams(QCoreApplication::arguments());
+
 
     if (false)
     {
@@ -29,6 +31,21 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 
+void MainWindow::getParams(QStringList params)
+{
+    if(params.size()>1)
+        PATH = params[1];
+    else
+        PATH=PATH_DEFAULT;
+
+    if(params.size()>2)
+        HIDE_CURSOR = (params[2]=="true");
+    else
+        HIDE_CURSOR = false;
+
+}
+
+
 
 void MainWindow::startGame1(QString playerName)
 {
@@ -37,12 +54,6 @@ void MainWindow::startGame1(QString playerName)
     gm->start(1,playerName);
 
 }
-
-
-
-
-
-
 
 
 

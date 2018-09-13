@@ -7,7 +7,10 @@
 #include "qdebug.h"
 #include "game.h"
 
-#define PATH (QString)"/home/fred/Dropbox/Taf/Cassiopee/predator2/files/"
+#define PATH_DEFAULT (QString)"/home/fred/Dropbox/Taf/Cassiopee/predator2/files/"
+
+class visual;
+class game;
 
 namespace Ui {
 class MainWindow;
@@ -22,9 +25,12 @@ public:
     ~MainWindow();
     visual *vs;
     game *gm;
+    QString PATH;
+    bool HIDE_CURSOR;
 
 private:
     Ui::MainWindow *ui;
+    void getParams(QStringList params);
 
 private slots:
     void startGame1(QString playerName);

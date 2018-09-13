@@ -17,10 +17,10 @@ button::button(QWidget* parent , int id, int w, QString on, QString off,bool ign
 
     hide();
 
-    offPix = new QImage(PATH+off); //preload image
+    offPix = new QImage(off); //preload image
+    onPix = new QImage(on); //preload image
 
 
-    onPix = new QImage(PATH+on); //preload image
 
 
     ratio = (double)(offPix->width())/(offPix->height());
