@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     getParams(QCoreApplication::arguments());
 
 
-    if (false)
+    if (HIDE_CURSOR)
     {
         QCursor cursor(Qt::BlankCursor);
         QApplication::setOverrideCursor(cursor);
