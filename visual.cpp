@@ -5,6 +5,7 @@
 
 
 #define INFO_TIME 3000
+#define TIMETOLAUNCH 10
 
 #define buttonWidth 700
 #define buttonSpacing 30
@@ -34,8 +35,8 @@ visual::visual(QWidget *parent):QLabel(parent)
     startImg = new QPixmap(mw->PATH+"startBG.png");
     infoImg = new QPixmap(mw->PATH+"infoBG.png");
     playersImg = new QPixmap(mw->PATH+"playersBG.png");
-
     keyboardImg1 = new QPixmap(mw->PATH+"keyboardBG1.png");
+    rulesImg = new QPixmap(mw->PATH+"pointsBG.png");
 
 
     int id = QFontDatabase::addApplicationFont(mw->PATH+FONTNAME);
@@ -47,7 +48,7 @@ visual::visual(QWidget *parent):QLabel(parent)
     name1P->setAlignment(Qt::AlignCenter);
     name1P->resize(TEXT1P_X1-TEXT1P_X0,TEXT1P_Y1-TEXT1P_Y0);
     name1P->move(TEXT1P_X0,TEXT1P_Y0);
-
+    name1P->hide();
 
     initKeyboards();
 
@@ -55,9 +56,9 @@ visual::visual(QWidget *parent):QLabel(parent)
     bOne = new button(this,1,buttonWidth,mw->PATH+"onePlayer2.png",mw->PATH+"onePlayer.png",true);
     bOne->move((width()-2*bOne->width()-buttonSpacing)/2,500);
     connect(bOne,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
-    bTwo = new button(this,1,buttonWidth,mw->PATH+"twoPlayers2.png",mw->PATH+"twoPlayers.png",true);
+    bTwo = new button(this,2,buttonWidth,mw->PATH+"twoPlayers2.png",mw->PATH+"twoPlayers.png",true);
     bTwo->move(width()-bOne->width()-bOne->x(),500);
-    connect(bTwo,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
+    //connect(bTwo,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
     //bTwo->move((width()-2*bOne->width()-buttonSpacing)/2+buttonSpacing+bOne->width(),500);
 
 
@@ -77,18 +78,19 @@ void visual::mousePressEvent( QMouseEvent* ev )
         {
             if((pt.x()>b.x1)&&(pt.x()<b.x2)&&(pt.y()>b.y1)&(pt.y()<b.y2))
             {
-            keyIn1(b.txt);
+                keyIn1(b.txt);
             }
         }
     }
 
-   // qDebug()<<ev->pos();
+    // qDebug()<<ev->pos();
 }
 
 
 void visual::start(void)
 {
     gameState = game_start;
+    name1P->hide();
     this->setPixmap(*startImg);
     this->show();
 }
@@ -113,12 +115,16 @@ void visual::playersChoice()
 
 
 
+
+
+
 void visual::keyIn1(QString k)
 {
     if(k == "send")
     {
         if(name1.size()>=NAME1_MIN_LENGTH)
-            emit startGame1(name1);
+            showRules();
+        return;
     }
     else if(k=="back")
     {
@@ -196,24 +202,23 @@ void visual::startKeyboard(int playersCount)
         this->setPixmap(*keyboardImg1);
         name1 = "";
         updTxt(name1P,name1);
+        this->show();
 
     }
     else
     {
 
-
+        this->hide();
+        emit startGame2();
     }
 
 
-    this->show();
+
 
 }
 
 void visual::updTxt(QLabel *lbl,QString txt)
 {
-
-
-
 
     QFontMetrics metrics(font);
     QSize size = metrics.size(0, txt); //Get size of text
@@ -226,8 +231,25 @@ void visual::updTxt(QLabel *lbl,QString txt)
 
     lbl->setFont(font);
     lbl->setText(txt);
+
+    lbl->show();
 }
 
+
+
+void visual::showRules()
+{
+    name1P->hide();
+    this->setPixmap(*rulesImg);
+    gameState = game_rules;
+    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(launchGame()));
+}
+
+void visual::launchGame()
+{
+
+    emit startGame1(name1);
+}
 
 
 visual::~visual()

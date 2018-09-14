@@ -13,7 +13,7 @@
 #include "qfontdatabase.h"
 #include "mainwindow.h"
 
-enum states { game_none,game_start,game_info,game_choice,game_keyboard1,game_keyboard2 };
+enum states { game_none,game_start,game_info,game_choice,game_keyboard1,game_rules };
 
 class  MainWindow;
 
@@ -36,7 +36,7 @@ public:
 private:
     MainWindow *mw;
 
-    QPixmap *startImg,*infoImg,*playersImg,*keyboardImg1,*keyboardImg2;
+    QPixmap *startImg,*infoImg,*playersImg,*keyboardImg1,*rulesImg;
     button *bOne,*bTwo;
     states gameState;
     QLabel *name1P,*name2P1,*name2P2;
@@ -47,10 +47,11 @@ private:
     std::vector<key> keyMap1,keyMap21,keyMap22;
     void initKeyboards();
     void keyIn1(QString k);
-
+    void showRules();
 
 private slots:
     void showInfo();
+    void launchGame();
 
 public slots:
     void playersChoice();
@@ -58,7 +59,7 @@ public slots:
 
 signals:
     void startGame1(QString name);
-
+    void startGame2();
 
 };
 

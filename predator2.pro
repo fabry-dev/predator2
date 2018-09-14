@@ -16,11 +16,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     visual.cpp \
     button.cpp \
-    game.cpp
+    game.cpp \
+    can.cpp \
+    rankingui.cpp
 
 HEADERS  += mainwindow.h \
     visual.h \
     button.h \
-    game.h
+    game.h \
+    can.h \
+    rankingui.h
 
 FORMS    += mainwindow.ui
