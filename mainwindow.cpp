@@ -75,6 +75,28 @@ void MainWindow::winGame1(int score,QString playerName)
     QTimer::singleShot(1000*rankingTime,this,SLOT(reset()));
 }
 
+void MainWindow::loadParamsFile()
+{
+
+    QFile file(PATH+"config.cfg");
+    if(!file.open(QIODevice::ReadOnly)) {
+        qDebug()<<"no config file";
+        return;
+    }
+
+    QTextStream in(&file);
+
+    QString  line;
+    QStringList params;
+
+
+    while(!in.atEnd()) {
+        line = in.readLine();
+        params.append(line);
+    }
+
+    file.close();
+}
 
 
 void MainWindow::winGame2()

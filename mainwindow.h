@@ -39,6 +39,7 @@ public:
 private:
     Ui::MainWindow *ui;
     void getParams(QStringList params);
+    void loadParamsFile();
 
 
 private slots:

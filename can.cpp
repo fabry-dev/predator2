@@ -31,19 +31,7 @@ can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path,bool 
     predator2Pic =  new QImage(path+"predator2.png");
 
 
-
-
-
-
     frozen = false;
-
-
-
-
-
-
-
-
 
 
     ratio = (double)(canPic->width())/(canPic->height());
