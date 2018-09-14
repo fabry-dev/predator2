@@ -62,7 +62,7 @@ visual::visual(QWidget *parent):QLabel(parent)
     //bTwo->move((width()-2*bOne->width()-buttonSpacing)/2+buttonSpacing+bOne->width(),500);
 
 
-
+  //
 }
 
 void visual::mousePressEvent( QMouseEvent* ev )
