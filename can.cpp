@@ -16,7 +16,7 @@
 
 
 can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path)
-    : QLabel(parent),id(id),ignoreEmptySpace(ignoreEmptySpace)
+    : QWidget(parent),id(id),ignoreEmptySpace(ignoreEmptySpace)
 {
 
     hide();
@@ -30,7 +30,19 @@ can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path)
     predator1Pic =  new QImage(path+"predator.png");
     predator2Pic =  new QImage(path+"predator2.png");
 
+
+
+
+
+
     frozen = false;
+
+
+
+
+
+
+
 
 
 
@@ -40,6 +52,55 @@ can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path)
 
 
     //this->setStyleSheet2("border: 1px solid black");
+
+
+
+    lbl1 = new QLabel(this);
+    lbl1->resize(size());
+    lbl1->setPixmap(QPixmap::fromImage((*canPic).scaled(width(),height())));
+    lbl2 = new QLabel(this);
+    lbl2->resize(size());
+
+
+    appearance1 = new QPropertyAnimation(lbl1, "geometry");
+    appearance1->setDuration(200);
+    appearance1->setStartValue(QRect(-width(), 0, width(),height()));
+    appearance1->setEndValue(QRect(0, 0, width(),height()));
+    appearance1->setEasingCurve(QEasingCurve::InCurve);
+
+
+    disappearance1 = new QPropertyAnimation(lbl1, "geometry");
+    disappearance1->setDuration(200);
+    disappearance1->setStartValue(QRect(0, 0, width(),height()));
+    disappearance1->setEndValue(QRect(-width(), 0, width(),height()));
+    disappearance1->setEasingCurve(QEasingCurve::InCurve);
+    connect(disappearance1,SIGNAL(finished()),lbl1,SLOT(hide()));
+
+    appearance2 = new QPropertyAnimation(lbl2, "geometry");
+    appearance2->setDuration(200);
+    appearance2->setStartValue(QRect(width(), 0, width(),height()));
+    appearance2->setEndValue(QRect(0, 0, width(),height()));
+    appearance2->setEasingCurve(QEasingCurve::InCurve);
+
+
+    disappearance2 = new QPropertyAnimation(lbl2, "geometry");
+    disappearance2->setDuration(200);
+    disappearance2->setStartValue(QRect(0, 0, width(),height()));
+    disappearance2->setEndValue(QRect(width(), 0, width(),height()));
+    disappearance2->setEasingCurve(QEasingCurve::InCurve);
+    connect(disappearance2,SIGNAL(finished()),lbl2,SLOT(hide()));
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     type = CAN;
@@ -81,32 +142,52 @@ void can::randomChange()
 void can::drawState()
 {
     QPixmap pix;
-
+    appearance1->stop();
+    disappearance2->stop();
+    appearance2->stop();
+    disappearance1->stop();
     if(type==CAN)
-        pix = QPixmap::fromImage((*canPic).scaled(width(),height()));
-    else if (type==CANRED)
-        pix = QPixmap::fromImage((*canredPic).scaled(width(),height()));
-    else if (type==CANGLOW)
-        pix = QPixmap::fromImage((*canglowPic).scaled(width(),height()));
-    else if (type==PREDATOR1)
-        pix = QPixmap::fromImage((*predator1Pic).scaled(width(),height()));
-    else if (type==PREDATOR2)
-        pix = QPixmap::fromImage((*predator2Pic).scaled(width(),height()));
+    {
+        appearance1->start();
+        disappearance2->start();
+    }
+    else
+    {
+        if (type==CANRED)
+            pix = QPixmap::fromImage((*canredPic).scaled(width(),height()));
+        else if (type==CANGLOW)
+            pix = QPixmap::fromImage((*canglowPic).scaled(width(),height()));
+        else if (type==PREDATOR1)
+            pix = QPixmap::fromImage((*predator1Pic).scaled(width(),height()));
+        else if (type==PREDATOR2)
+            pix = QPixmap::fromImage((*predator2Pic).scaled(width(),height()));
+
+        lbl2->setPixmap(pix);
+        appearance2->start();
+        disappearance1->start();
+    }
 
 
-    setPixmap(pix);
+    lbl2->show();
+    lbl1->show();
 }
+
+
+
+
 
 void can::goBackToCan()
 {
+    if(type == CAN)
+        return;
     type = CAN;
     drawState();
 }
 
 void can::freeze()
 {
-   goBackToCan();
-   frozen = true;
+    goBackToCan();
+    frozen = true;
 }
 
 void can::unfreeze()
@@ -119,8 +200,11 @@ void can::changeType(int nutype)
 {
     if(frozen)
         return;
+    if(type == nutype)
+        return;
 
     type = nutype;
+
     drawState();
     QTimer::singleShot(TIMEON,this,SLOT(goBackToCan()));
 
@@ -128,8 +212,7 @@ void can::changeType(int nutype)
 
 void can::mousePressEvent( QMouseEvent* ev )
 {
-    QImage image(pixmap()->toImage());
-    QColor color(image.pixel(ev->pos()));
+
 
     if(frozen)
         return;

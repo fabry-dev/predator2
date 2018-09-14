@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     vs->start();
-
+//gm1->start("tst");
 
 
 }

@@ -9,7 +9,7 @@
 #include "qevent.h"
 #include <QMouseEvent>
 #include "qstringlist.h"
-
+#include "QPropertyAnimation"
 
 #define CAN 0
 #define CANGLOW 1
@@ -19,7 +19,7 @@
 
 
 
-class can:public QLabel
+class can:public QWidget
 {
     Q_OBJECT
 
@@ -44,7 +44,9 @@ private:
     bool ignoreEmptySpace;
     QTimer *t0;
     bool frozen;
-
+    QLabel *lbl1,*lbl2;
+    QPropertyAnimation *appearance1,*disappearance1,*appearance2,*disappearance2;
+   // void changeType(int nutype);
 
 signals:
     void clicked(int,int);

@@ -36,6 +36,8 @@ private:
     QFont font;
     bool ignoreEmptySpace;
 
+
+
 signals:
     void clicked(int);
     void released(int);
