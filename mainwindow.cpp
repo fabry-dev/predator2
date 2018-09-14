@@ -39,8 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //
 
 
-    //vs->start();
-    gm2->start();
+    vs->start();
+    //gm2->start();
 
 
 }
