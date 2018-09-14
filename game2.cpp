@@ -26,9 +26,9 @@
 #define SCORE1_Y1 115
 #define OFFSETY 20
 
-#define CLOCK1_X0 187
+#define CLOCK1_X0 (187)
 #define CLOCK1_Y0 SCORE1_Y0
-#define CLOCK1_X1 446
+#define CLOCK1_X1 (446)
 #define CLOCK1_Y1 SCORE1_Y1
 
 #define SCORE2_X0 1452
@@ -44,7 +44,7 @@
 #define OFFSETX 0
 
 
-#define GAMETIME 60
+#define GAMETIME (mw->params[3])
 
 
 #define FONTNAME "police.ttf"
@@ -201,6 +201,16 @@ void game2P::tick(){
     }
 }
 
+
+
+
+
+
+
+
+
+
+
 void game2P::updTxt(QLabel *lbl,QString txt)
 {
     QFontMetrics metrics(font);
@@ -210,8 +220,10 @@ void game2P::updTxt(QLabel *lbl,QString txt)
     float factor = qMin(factorw, factorh); //To fit contents in the screen select as factor
     //the minimum factor between width and height
 
-    font.setPointSizeF(font.pointSizeF() * factor); //Set font size
 
+
+//    /font.setPointSizeF(font.pointSizeF() * factor); //Set font size
+    font.setPointSize(font.pointSizeF() * factor); //Set font size
     lbl->setFont(font);
     lbl->setText(txt);
 }

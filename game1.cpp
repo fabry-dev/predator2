@@ -29,7 +29,7 @@
 #define OFFSETX 0
 
 
-#define GAMETIME 60
+#define GAMETIME (mw->params[2])
 
 
 #define FONTNAME "police.ttf"

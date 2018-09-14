@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     getParams(QCoreApplication::arguments());
-
+    loadParamsFile();
 
     if (HIDE_CURSOR)
     {
@@ -87,15 +87,20 @@ void MainWindow::loadParamsFile()
     QTextStream in(&file);
 
     QString  line;
-    QStringList params;
+
 
 
     while(!in.atEnd()) {
         line = in.readLine();
-        params.append(line);
+        line = (line.split("#"))[0];
+        params.push_back(line.toInt());
     }
 
     file.close();
+
+    for(auto i:params)
+        qDebug()<<i;
+
 }
 
 

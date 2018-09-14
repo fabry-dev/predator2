@@ -35,6 +35,7 @@ public:
 
     QString PATH;
     bool HIDE_CURSOR;
+    std::vector<int> params;
 
 private:
     Ui::MainWindow *ui;

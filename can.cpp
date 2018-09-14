@@ -11,8 +11,10 @@
 
 
 
-#define TIMEON 1000
-#define DT 300
+//#define TIMEON 1000
+#define TIMEON (mw->params[0])
+
+#define DT (mw->params[1])
 
 
 can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path,bool slave)
@@ -20,6 +22,8 @@ can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path,bool 
 {
 
     hide();
+
+    mw = (MainWindow*)(parent->parent());
 
     QTime now = QTime::currentTime();
     qsrand(now.msec());

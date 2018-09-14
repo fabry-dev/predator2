@@ -18,6 +18,8 @@
 #define PREDATOR2 4
 
 
+class MainWindow;
+
 
 class can:public QWidget
 {
@@ -47,6 +49,7 @@ private:
     bool frozen;
     QLabel *lbl1,*lbl2;
     QPropertyAnimation *appearance1,*disappearance1,*appearance2,*disappearance2;
+    MainWindow *mw;
 
    // void changeType(int nutype);
 
