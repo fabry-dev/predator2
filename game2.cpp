@@ -132,7 +132,8 @@ game2P::game2P(QWidget *parent):QLabel(parent)
     connect(clock,SIGNAL(timeout()),this,SLOT(tick()));
 
 
-    matrix.clear();
+    matrix1.clear();
+    matrix2.clear();
 
     int num = 0;
 
@@ -142,7 +143,7 @@ game2P::game2P(QWidget *parent):QLabel(parent)
 
             can *c = new can(this,1,windowWidth/boxcount,false,mw->PATH);
             c->show();
-            matrix.push_back(c);
+            matrix1.push_back(c);
             c->move((double)i*windowWidth/boxcount,windowY0+c->height()*(j));
             connect(c,SIGNAL(clicked(int,int)),this,SLOT(getCan(int,int)));
             connect(this,SIGNAL(freeze()),c,SLOT(freeze()));
@@ -150,18 +151,20 @@ game2P::game2P(QWidget *parent):QLabel(parent)
             num++;
         }
 
-
+    num  = 0;
     for(int j = 0;j<4;j++)
         for (int i =0;i<4;i++)
         {
 
-            can *c = new can(this,2,windowWidth/boxcount,false,mw->PATH);
+            can *c = new can(this,2,windowWidth/boxcount,false,mw->PATH,true);
             c->show();
-            matrix.push_back(c);
+            matrix2.push_back(c);
             c->move((double)i*windowWidth/boxcount+GAPX+windowWidth,windowY0+c->height()*(j));
             connect(c,SIGNAL(clicked(int,int)),this,SLOT(getCan(int,int)));
             connect(this,SIGNAL(freeze()),c,SLOT(freeze()));
             connect(this,SIGNAL(restartGame()),c,SLOT(unfreeze()));
+            connect(matrix1[num],SIGNAL(changedTo(int)),c,SLOT(changeType(int)));
+
             num++;
         }
 }

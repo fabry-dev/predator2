@@ -15,8 +15,8 @@
 #define DT 300
 
 
-can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path)
-    : QWidget(parent),id(id),ignoreEmptySpace(ignoreEmptySpace)
+can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path,bool slave)
+    : QWidget(parent),id(id),ignoreEmptySpace(ignoreEmptySpace),slave(slave)
 {
 
     hide();
@@ -109,6 +109,8 @@ can::can(QWidget* parent , int id,int w,bool ignoreEmptySpace,QString path)
 
     t0 = new QTimer(this);
     connect(t0,SIGNAL(timeout()),this,SLOT(randomChange()));
+    if(!slave)
+
     t0->start(DT);
 
 }
@@ -172,16 +174,11 @@ void can::drawState()
     lbl1->show();
 }
 
-
-
-
-
 void can::goBackToCan()
 {
-    if(type == CAN)
+    setType(CAN);
+    if(slave)
         return;
-    type = CAN;
-    drawState();
 }
 
 void can::freeze()
@@ -196,16 +193,32 @@ void can::unfreeze()
 
 }
 
-void can::changeType(int nutype)
+
+
+
+void can::setType(int nutype)
 {
-    if(frozen)
-        return;
     if(type == nutype)
         return;
 
-    type = nutype;
 
+    type = nutype;
     drawState();
+}
+
+void can::changeType(int nutype)
+{
+
+
+    if(frozen)
+        return;
+
+
+    emit changedTo(nutype);
+
+
+    setType(nutype);
+
     QTimer::singleShot(TIMEON,this,SLOT(goBackToCan()));
 
 }

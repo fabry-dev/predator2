@@ -29,7 +29,7 @@ protected:
     void mousePressEvent( QMouseEvent* ev );
 
 private:
-    std::vector<can*> matrix;
+    std::vector<can*> matrix1,matrix2;
     QPixmap *bg2PImg;
     QPixmap *winImg;
     QPixmap *loseImg;
