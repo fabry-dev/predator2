@@ -47,7 +47,7 @@ private:
 
 
 signals:
-    void clicked(int);
+    void clicked(int,int);
 
 private slots:
     void goBackToCan();

@@ -58,8 +58,8 @@ visual::visual(QWidget *parent):QLabel(parent)
     connect(bOne,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
     bTwo = new button(this,2,buttonWidth,mw->PATH+"twoPlayers2.png",mw->PATH+"twoPlayers.png",true);
     bTwo->move(width()-bOne->width()-bOne->x(),500);
-    //connect(bTwo,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
-    //bTwo->move((width()-2*bOne->width()-buttonSpacing)/2+buttonSpacing+bOne->width(),500);
+    connect(bTwo,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
+
 
 
   //
@@ -123,7 +123,7 @@ void visual::keyIn1(QString k)
     if(k == "send")
     {
         if(name1.size()>=NAME1_MIN_LENGTH)
-            showRules();
+            showRules1();
         return;
     }
     else if(k=="back")
@@ -208,8 +208,8 @@ void visual::startKeyboard(int playersCount)
     else
     {
 
-        this->hide();
-        emit startGame2();
+        this->showRules2();
+
     }
 
 
@@ -237,18 +237,38 @@ void visual::updTxt(QLabel *lbl,QString txt)
 
 
 
-void visual::showRules()
+void visual::showRules1()
 {
     name1P->hide();
     this->setPixmap(*rulesImg);
     gameState = game_rules;
-    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(launchGame()));
+    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(launchGame1()));
 }
 
-void visual::launchGame()
+void visual::showRules2()
+{
+
+    this->setPixmap(*rulesImg);
+    gameState = game_rules;
+    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(launchGame2()));
+}
+
+
+
+
+
+
+void visual::launchGame1()
 {
 
     emit startGame1(name1);
+}
+
+
+void visual::launchGame2()
+{
+
+    emit startGame2();
 }
 
 

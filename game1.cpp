@@ -1,9 +1,9 @@
-#include "game.h"
+#include "game1.h"
 #include "qdebug.h"
 #include "qtimer.h"
 #include "mainwindow.h"
 
-
+#define WINTIME 3
 #define INFO_TIME 3000
 
 #define buttonWidth 700
@@ -29,7 +29,7 @@
 #define OFFSETX 0
 
 
-#define GAMETIME 10
+#define GAMETIME 60
 
 
 #define FONTNAME "police.ttf"
@@ -59,6 +59,7 @@ game1P::game1P(QWidget *parent):QLabel(parent)
     score1P->setAlignment(Qt::AlignCenter);
     score1P->resize(SCORE1P_X1-SCORE1P_X0,SCORE1P_Y1-SCORE1P_Y0);
     score1P->move(SCORE1P_X0+OFFSETX,SCORE1P_Y0+OFFSETY);
+    score1P->setStyleSheet("QLabel { color : white; }");
     score1P->show();
 
     clock1P = new QLabel(this);
@@ -67,6 +68,7 @@ game1P::game1P(QWidget *parent):QLabel(parent)
     clock1P->setAlignment(Qt::AlignCenter);
     clock1P->resize(CLOCK1P_X1-CLOCK1P_X0,CLOCK1P_Y1-CLOCK1P_Y0);
     clock1P->move(CLOCK1P_X0+OFFSETX,CLOCK1P_Y0+OFFSETY);
+    clock1P->setStyleSheet("QLabel { color : white; }");
     clock1P->show();
 
     win1Plbl = new QLabel(this);
@@ -74,6 +76,7 @@ game1P::game1P(QWidget *parent):QLabel(parent)
     win1Plbl->setPixmap(*win1PImg);
     win1Plbl->move(0,600);
     win1Plbl->hide();
+
 
     clock = new QTimer(this);
     connect(clock,SIGNAL(timeout()),this,SLOT(tick()));
@@ -92,8 +95,8 @@ game1P::game1P(QWidget *parent):QLabel(parent)
                 c->show();
                 matrix.push_back(c);
                 c->move((double)i*width()/boxcount,c->height()*(j));
-                connect(c,SIGNAL(clicked(int)),this,SLOT(getCan1P(int)));
-                connect(this,SIGNAL(hasWon1P(int,QString)),c,SLOT(freeze()));
+                connect(c,SIGNAL(clicked(int,int)),this,SLOT(getCan(int,int)));
+                connect(this,SIGNAL(freeze()),c,SLOT(freeze()));
                 connect(this,SIGNAL(restartGame()),c,SLOT(unfreeze()));
                 num++;
             }
@@ -162,7 +165,7 @@ void game1P::start(QString nuPlayerName)
     this->show();
 }
 
-void game1P::getCan1P(int type)
+void game1P::getCan(int type,int id)
 {
     score+=pointsPerType[type];
     QString score2 = QString("%1").arg(score, 4, 10, QChar('0'));
@@ -174,10 +177,16 @@ void game1P::win1p()
     win1Plbl->show();
     win1Plbl->raise();
     clock->stop();
-    emit hasWon1P(score,playerName);
+    emit freeze();
+    QTimer::singleShot(1000*WINTIME,this,SLOT(preWin()));
+
 }
 
+void game1P::preWin()
+{
+        emit hasWon1P(score,playerName);
 
+}
 
 game1P::~game1P()
 {

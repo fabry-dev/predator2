@@ -5,7 +5,8 @@
 #include "visual.h"
 #include "qstring.h"
 #include "qdebug.h"
-#include "game.h"
+#include "game1.h"
+#include "game2.h"
 #include "qtimer.h"
 #include "rankingui.h"
 
@@ -14,6 +15,7 @@
 class visual;
 class game1P;
 class rankingUI;
+class game2P;
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +30,7 @@ public:
     ~MainWindow();
     visual *vs;
     game1P *gm1;
+    game2P *gm2;
     rankingUI *rk;
 
     QString PATH;
@@ -42,6 +45,7 @@ private slots:
     void startGame1(QString playerName);
     void startGame2();
     void winGame1(int score,QString playerName);
+    void winGame2();
     void reset(void);
 
 

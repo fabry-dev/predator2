@@ -136,7 +136,7 @@ void can::mousePressEvent( QMouseEvent* ev )
 
     if(type != CAN)
     {
-        emit clicked(type);
+        emit clicked(type,id);
         goBackToCan();
     }
 }

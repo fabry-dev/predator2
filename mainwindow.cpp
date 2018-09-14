@@ -28,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent) :
     gm1 = new game1P(this);
     connect(gm1,SIGNAL(hasWon1P(int,QString)),this,SLOT(winGame1(int,QString)));
 
+    gm2 = new game2P(this);
+    connect(gm2,SIGNAL(hasWon2P()),this,SLOT(winGame2()));
+
+
+
     rk = new rankingUI(this);
 
 
@@ -71,11 +76,21 @@ void MainWindow::winGame1(int score,QString playerName)
 }
 
 
+
+void MainWindow::winGame2()
+{
+    qDebug()<<"won 2P";
+    reset();
+}
+
+
+
 void MainWindow::reset()
 {
-gm1->hide();
-rk->hide();
-vs->start();
+    gm2->hide();
+    gm1->hide();
+    rk->hide();
+    vs->start();
 
 
 }
@@ -84,9 +99,9 @@ vs->start();
 
 void MainWindow::startGame2()
 {
-    return;
     qDebug()<<"starts game 2";
     vs->hide();
+    gm2->start();
 
 
 }

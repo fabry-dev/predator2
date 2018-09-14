@@ -45,13 +45,14 @@ private:
 
 
 private slots:
-    void getCan1P(int type);
+    void getCan(int type,int id);
     void tick();
+    void preWin();
 
 signals:
     void hasWon1P(int,QString);
     void restartGame();
-
+    void freeze();
 
 public slots:
     void start(QString nuPlayerName="");

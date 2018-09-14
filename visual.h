@@ -47,11 +47,13 @@ private:
     std::vector<key> keyMap1,keyMap21,keyMap22;
     void initKeyboards();
     void keyIn1(QString k);
-    void showRules();
+    void showRules1();
+    void showRules2();
 
 private slots:
     void showInfo();
-    void launchGame();
+    void launchGame1();
+    void launchGame2();
 
 public slots:
     void playersChoice();
