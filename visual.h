@@ -55,12 +55,13 @@ private slots:
     void showInfo();
     void launchGame1();
     void launchGame2();
-    void startCountDown1P();
-    void startCountDown2P();
+
 
 public slots:
     void playersChoice();
     void startKeyboard(int playersCount);
+    void startCountDown1P();
+    void startCountDown2P();
 
 signals:
     void startGame1(QString name);

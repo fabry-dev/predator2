@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     vs->start();
+    //vs->startCountDown2P();
     //gm2->start();
 
 

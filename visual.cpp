@@ -67,6 +67,7 @@ visual::visual(QWidget *parent):QLabel(parent)
     connect(bTwo,SIGNAL(clicked(int)),this,SLOT(startKeyboard(int)));
 
 
+    count = 3;
 
     //
 }
@@ -265,6 +266,7 @@ void visual::showRules2()
 
 void visual::startCountDown1P()
 {
+    this->show();
     if(count == 3)
         this->setPixmap(*cdImg3);
     else if(count == 2)
@@ -273,7 +275,8 @@ void visual::startCountDown1P()
         this->setPixmap(*cdImg1);
     else
     {
-        QTimer::singleShot(1000,this,SLOT(launchGame1()));
+        //QTimer::singleShot(300,this,SLOT(launchGame1()));
+        launchGame1();
         return;
     }
     gameState = countdown;
@@ -285,6 +288,7 @@ void visual::startCountDown1P()
 
 void visual::startCountDown2P()
 {
+    show();
     if(count == 3)
         this->setPixmap(*cdImg33);
     else if(count == 2)
@@ -293,7 +297,8 @@ void visual::startCountDown2P()
         this->setPixmap(*cdImg11);
     else
     {
-        QTimer::singleShot(1000,this,SLOT(launchGame2()));
+        launchGame2();
+     //   QTimer::singleShot(1000,this,SLOT(launchGame2()));
         return;
     }
     gameState = countdown;
