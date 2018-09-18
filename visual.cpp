@@ -5,7 +5,7 @@
 
 
 #define INFO_TIME 3000
-#define TIMETOLAUNCH 10
+#define TIMETOLAUNCH 6
 
 #define buttonWidth 700
 #define buttonSpacing 30
@@ -37,6 +37,12 @@ visual::visual(QWidget *parent):QLabel(parent)
     playersImg = new QPixmap(mw->PATH+"playersBG.png");
     keyboardImg1 = new QPixmap(mw->PATH+"keyboardBG1.png");
     rulesImg = new QPixmap(mw->PATH+"pointsBG.png");
+    cdImg1 = new QPixmap(mw->PATH+"CD1.png");
+    cdImg2 = new QPixmap(mw->PATH+"CD2.png");
+    cdImg3 = new QPixmap(mw->PATH+"CD3.png");
+    cdImg11 = new QPixmap(mw->PATH+"CD1-1.png");
+    cdImg22 = new QPixmap(mw->PATH+"CD2-2.png");
+    cdImg33 = new QPixmap(mw->PATH+"CD3-3.png");
 
 
     int id = QFontDatabase::addApplicationFont(mw->PATH+FONTNAME);
@@ -62,7 +68,7 @@ visual::visual(QWidget *parent):QLabel(parent)
 
 
 
-  //
+    //
 }
 
 void visual::mousePressEvent( QMouseEvent* ev )
@@ -242,7 +248,8 @@ void visual::showRules1()
     name1P->hide();
     this->setPixmap(*rulesImg);
     gameState = game_rules;
-    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(launchGame1()));
+    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(startCountDown1P()));
+    count = 3;
 }
 
 void visual::showRules2()
@@ -250,7 +257,48 @@ void visual::showRules2()
 
     this->setPixmap(*rulesImg);
     gameState = game_rules;
-    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(launchGame2()));
+    QTimer::singleShot(1000*TIMETOLAUNCH,this,SLOT(startCountDown2P()));
+    count = 3;
+}
+
+
+
+void visual::startCountDown1P()
+{
+    if(count == 3)
+        this->setPixmap(*cdImg3);
+    else if(count == 2)
+        this->setPixmap(*cdImg2);
+    else if(count == 1)
+        this->setPixmap(*cdImg1);
+    else
+    {
+        QTimer::singleShot(1000,this,SLOT(launchGame1()));
+        return;
+    }
+    gameState = countdown;
+    count --;
+    QTimer::singleShot(1000,this,SLOT(startCountDown1P()));
+}
+
+
+
+void visual::startCountDown2P()
+{
+    if(count == 3)
+        this->setPixmap(*cdImg33);
+    else if(count == 2)
+        this->setPixmap(*cdImg22);
+    else if(count == 1)
+        this->setPixmap(*cdImg11);
+    else
+    {
+        QTimer::singleShot(1000,this,SLOT(launchGame2()));
+        return;
+    }
+    gameState = countdown;
+    count --;
+    QTimer::singleShot(1000,this,SLOT(startCountDown2P()));
 }
 
 
